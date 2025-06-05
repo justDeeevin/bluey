@@ -28,6 +28,11 @@
         commonArgs = {
           inherit src;
           strictDeps = true;
+
+          nativeBuildInputs = with pkgs; [
+            pkg-config
+            dbus
+          ];
         };
 
         cargoArtifacts = craneLib.buildDepsOnly commonArgs;

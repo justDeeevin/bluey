@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+crossterm = { version = "0.29.0", features = ["event-stream"] }
+ratatui = "0.29.0"
+color-eyre = "0.6.5"
+bluer = { version = "0.17.3", features = ["full"] }
+tokio = { version = "1.45.1", features = ["full"] }
+futures = "0.3.31"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+indexmap = "2.9.0"
+tui-popup = "0.6.0"
