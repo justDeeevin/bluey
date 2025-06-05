@@ -360,9 +360,32 @@ impl App {
         let (paired, mut paired_state) = self.table(self.paired.values().collect(), List::Paired);
         frame.render_stateful_widget(paired, right, &mut paired_state);
 
-        let legend = Text::raw("q: quit • s: scan")
-            .alignment(Alignment::Center)
-            .style(Style::default().bold());
+        let legend_items: &[(&str, &str)] = if self.error.is_some() {
+            &[("esc", "close")]
+        } else {
+            &[
+                ("◀▼▲▶", "navigate"),
+                ("q", "quit"),
+                ("s", "scan"),
+                (
+                    "↵",
+                    match self.selected_list {
+                        List::Unpaired => "pair",
+                        List::Paired => "connect",
+                    },
+                ),
+            ]
+        };
+
+        let legend = Text::raw(
+            legend_items
+                .iter()
+                .map(|(key, action)| format!("{key}: {action}"))
+                .collect::<Vec<_>>()
+                .join(" • "),
+        )
+        .alignment(Alignment::Center)
+        .style(Style::default().bold());
         frame.render_widget(legend, bottom);
 
         let Some(Error { process, message }) = self.error.clone() else {
