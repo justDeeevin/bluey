@@ -225,6 +225,7 @@ async fn run(mut terminal: DefaultTerminal) -> Result<()> {
                             device_events_handle.abort()
                         }
                         app.unpaired.clear();
+                        app.paired.clear();
                         adapter_events_handle = Some(scan(adapter, tx_additions.clone()));
                     }
                     KeyCode::Enter => {
