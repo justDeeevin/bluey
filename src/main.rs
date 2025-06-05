@@ -402,9 +402,15 @@ impl App {
     }
 
     fn table(&self, items: Vec<&Device>, list: List) -> (Table, TableState) {
-        let block = Block::default()
+        let active = list == self.selected_list;
+        let mut block = Block::default()
             .title(list.to_string())
             .borders(Borders::ALL);
+        if active {
+            block = block
+                .title_style(Style::default().bold())
+                .border_set(symbols::border::THICK);
+        }
         let rows = items.iter().map(|d| {
             let mut cells = vec![d.alias.clone()];
             if let List::Paired = list {
@@ -422,7 +428,7 @@ impl App {
             .row_highlight_style(Style::default().reversed())
             .block(block);
 
-        let selected = if list == self.selected_list && !items.is_empty() {
+        let selected = if active && !items.is_empty() {
             Some(self.selected_row)
         } else {
             None
